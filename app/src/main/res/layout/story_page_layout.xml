@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <include
+        android:id="@+id/top_of_page"
+        layout="@layout/page_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/bottom_of_page"
+        layout="@layout/page_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/clipboard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_24sdp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_of_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:strokeColor="@color/text_on_white_color"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/symbol1_in_bg"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/left_bg_symbl1" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/story_bubble_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent=".95"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".55"
+                app:srcCompat="@drawable/story_bubble" />
+
+            <TextView
+                android:id="@+id/story_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxEms="12"
+                android:maxLines="9"
+                android:text="
+يعتبر الجمل من أشهر الحيوانات التي
+عرف وجودها في الصحراء، حيث أنها كانت
+ قديمًا وسيلة السفر الوحيدة من مكان لمكان
+  قديمًا وسيلة السفر الوحيدة من مكان لمكان
+ قديمًا وسيلة السفر الوحيدة من مكان لمكان
+ قديمًا وسيلة السفر الوحيدة من مكان لمكان
+ قديمًا وسيلة السفر الوحيدة من مكان لمكان
+ قديمًا وسيلة"
+                android:textColor="@color/black"
+                android:textDirection="anyRtl"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/story_bubble_bg"
+                app:layout_constraintEnd_toEndOf="@+id/story_bubble_bg"
+                app:layout_constraintStart_toStartOf="@+id/story_bubble_bg"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent=".2" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/symbol2_in_bg"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/story_bubble_bg"
+                app:layout_constraintStart_toEndOf="@+id/story_bubble_bg"
+                app:srcCompat="@drawable/right_bg_symbol" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/symbol3_in_bg"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintStart_toEndOf="@+id/story_bubble_bg"
+                app:layout_constraintTop_toTopOf="@+id/guideline"
+                app:srcCompat="@drawable/music_icon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/story_cover"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="fitEnd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/story_bubble_bg"
+                app:layout_constraintTop_toBottomOf="@+id/story_title"
+                app:layout_constraintWidth_percent=".35"
+                app:srcCompat="@drawable/lio" />
+
+            <TextView
+                android:id="@+id/story_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corener_bg"
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="ألاسد "
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/symbol3_in_bg"
+                app:layout_constraintTop_toTopOf="@+id/symbol3_in_bg" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/previous_paragraph_btn"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toTopOf="@+id/story_content"
+                app:layout_constraintStart_toEndOf="@+id/play_paragraph_btn"
+                app:srcCompat="@drawable/arrow_previous" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/play_paragraph_btn"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toTopOf="@id/story_content"
+                app:layout_constraintEnd_toStartOf="@+id/symbol3_in_bg"
+                app:layout_constraintStart_toStartOf="@+id/story_content"
+                app:srcCompat="@drawable/play" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/next_paragraph_btn"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toTopOf="@id/story_content"
+                app:layout_constraintEnd_toStartOf="@+id/play_paragraph_btn"
+                app:srcCompat="@drawable/arrow_next" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

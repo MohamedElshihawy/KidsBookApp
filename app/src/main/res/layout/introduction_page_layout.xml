@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+
+    <include
+        android:id="@+id/bottom_of_page"
+        layout="@layout/page_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/_24sdp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_of_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:layout_constraintWidth_percent=".85"
+        app:strokeColor="@color/text_on_white_color"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/animal_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent=".7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent=".25 "
+                app:srcCompat="@drawable/lio" />
+
+            <ImageView
+                android:id="@+id/cloud"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:contentDescription="@string/word_background"
+                app:layout_constraintBottom_toBottomOf="@+id/animal_image"
+                app:layout_constraintHeight_percent=".8"
+                app:layout_constraintStart_toEndOf="@+id/animal_image"
+                app:layout_constraintWidth_percent=".4"
+                app:srcCompat="@drawable/cloud" />
+
+            <TextView
+                android:id="@+id/animal_name"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clickable="false"
+                android:fontFamily="@font/blabello"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="أسد"
+                android:textColor="@color/text_on_white_color"
+                android:textSize="@dimen/_50ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cloud"
+                app:layout_constraintEnd_toEndOf="@+id/cloud"
+                app:layout_constraintStart_toStartOf="@+id/cloud"
+                app:layout_constraintTop_toTopOf="@+id/cloud" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/_4sdp"
+                android:background="@color/text_on_white_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cloud"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/letter_txt"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="@font/blabello"
+                android:foregroundGravity="bottom"
+                android:gravity="center"
+                android:text="ع"
+                android:textColor="@color/text_on_white_color"
+                android:textSize="@dimen/_86ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/cloud"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".7"
+                app:layout_constraintStart_toEndOf="@+id/view2" />
+
+            <ImageView
+                android:id="@+id/mic"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintBottom_toTopOf="@+id/letter_txt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/volume" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <include
+        android:id="@+id/top_of_page"
+        layout="@layout/page_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sun_cloud"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:elevation="@dimen/_4sdp"
+        android:scaleType="fitStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sun_and_clouds" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

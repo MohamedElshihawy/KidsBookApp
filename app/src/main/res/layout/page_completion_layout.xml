@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_bg"
+        app:cardCornerRadius="@dimen/_36sdp"
+        app:cardElevation="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent=".7"
+        app:layout_constraintWidth_percent=".4"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/purple_200"
+            android:paddingStart="@dimen/_24sdp"
+            android:paddingEnd="@dimen/_24sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                app:srcCompat="@drawable/badge" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent=".20"
+           />
+
+            <TextView
+                android:id="@+id/congrats_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/blabello"
+                android:gravity="center"
+                android:text="تهانينا"
+                android:textColor="@color/design_default_color_primary_variant"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+                app:srcCompat="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                app:srcCompat="@drawable/star" />
+
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="@+id/guideline2"
+                app:srcCompat="@drawable/star" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/checked"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:contentDescription="Submit"
+                android:padding="0dp"
+                app:cornerRadius="@dimen/_24sdp"
+                app:elevation="@dimen/_8sdp"
+                app:icon="@drawable/check"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:layout_constraintEnd_toEndOf="@+id/star2"
+                app:layout_constraintTop_toBottomOf="@+id/congrats_tx"
+                app:rippleColor="@android:color/holo_green_dark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/canceled"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:contentDescription="Cancel"
+                android:padding="0dp"
+                app:cornerRadius="@dimen/_24sdp"
+                app:elevation="@dimen/_8sdp"
+                app:icon="@drawable/cancel"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+
+                app:layout_constraintBottom_toBottomOf="@+id/checked"
+                app:layout_constraintStart_toStartOf="@+id/star3"
+                app:layout_constraintTop_toTopOf="@+id/checked"
+                app:rippleColor="@android:color/holo_red_light" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

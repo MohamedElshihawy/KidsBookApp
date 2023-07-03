@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sun_cloud"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:scaleType="fitStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sun_and_clouds" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/speaking_mic_image"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:contentDescription="@string/mic_button"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toTopOf="@+id/symbol3"
+        app:layout_constraintEnd_toEndOf="@+id/symbol3"
+        app:layout_constraintStart_toStartOf="@+id/symbol3"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:srcCompat="@drawable/voice_recognition_ic" />
+
+    <include
+        android:id="@+id/top_of_page"
+        layout="@layout/page_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/bottom_of_page"
+        layout="@layout/page_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/symbol1"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:srcCompat="@drawable/gb_symbl2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView2"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        app:layout_constraintStart_toStartOf="@+id/symbol2"
+        app:layout_constraintTop_toBottomOf="@+id/symbol2"
+        app:srcCompat="@drawable/music_icon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/symbol4"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/symbol1"
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+        app:layout_constraintTop_toBottomOf="@+id/symbol2"
+        app:srcCompat="@drawable/bg_pattern"
+        app:tint="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/symbol5"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/symbol1"
+        app:srcCompat="@drawable/gb_symbl2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/symbol2"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/left_bg_symbl1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/symbol3"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/right_bg_symbol" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/_24sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_of_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_of_page"
+        app:layout_constraintWidth_percent=".6"
+        app:strokeColor="@color/text_on_white_color"
+        app:strokeWidth="@dimen/_1sdp">
+
+       <TextView
+           android:id="@+id/letter_display_view"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:fontFamily="@font/blabello"
+           android:text="ر"
+           android:textColor="@color/text_on_white_color"
+           android:textSize="@dimen/_90sdp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/listening_now"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/_8sdp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:srcCompat="@drawable/listening_now" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

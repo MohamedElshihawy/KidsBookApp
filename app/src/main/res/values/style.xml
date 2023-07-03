@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="small_card_style">
+
+        <item name="strokeColor">@color/text_on_white_color</item>
+        <item name="strokeWidth">@dimen/_1sdp</item>
+        <item name="cardCornerRadius">@dimen/_8sdp</item>
+        <item name="cornerRadius">@dimen/_8sdp</item>
+    </style>
+
+
+</resources>

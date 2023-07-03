@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <include
+        android:id="@+id/top_of_page"
+        layout="@layout/page_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/bottom_of_page"
+        layout="@layout/page_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/letter_examples_data_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_of_page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:layout_constraintWidth_percent=".2">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/animal_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/lio" />
+
+        <TextView
+            android:id="@+id/letter_txt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/blabello"
+            android:gravity="center"
+            android:text="أ"
+            android:textColor="@color/text_on_white_color"
+            android:textSize="@dimen/_56ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/animal_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/mic_test_page"
+            android:layout_width="@dimen/_37sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/mic"
+            app:layout_constraintBottom_toTopOf="@+id/letter_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/volume" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/tool_icon"
+            android:layout_width="@dimen/_37sdp"
+            android:layout_height="0dp"
+            android:background="@color/primary_color"
+            android:contentDescription="@string/tool_bar"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/mic_test_page"
+            app:layout_constraintEnd_toStartOf="@+id/mic_test_page"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mic_test_page"
+            app:srcCompat="@drawable/paint_icon" />
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/vertical_tool_bar_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/tool_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tool_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_4sdp"
+        android:background="@color/text_on_white_color"
+        app:layout_constraintBottom_toTopOf="@id/bottom_of_page"
+        app:layout_constraintEnd_toStartOf="@+id/letter_examples_data_container"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/clipboard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_4sdp"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_of_page"
+        app:layout_constraintEnd_toStartOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:strokeColor="@color/text_on_white_color"
+        app:strokeWidth="@dimen/_1sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/first_line"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintBottom_toTopOf="@+id/second_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp"
+
+                    >
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/second_line"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintBottom_toTopOf="@+id/third_row"
+                app:layout_constraintHeight_percent=".3"
+                app:layout_constraintTop_toBottomOf="@+id/first_line">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/third_row"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/second_line">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card9"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeColor="@color/text_on_white_color"
+                    app:strokeWidth="@dimen/_1sdp">
+
+                    <com.example.book_v2.ui.customviews.DrawLetterView
+                        android:id="@+id/letter9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include
+                android:id="@+id/view_cover"
+                layout="@layout/shadow_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/user_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:elevation="@dimen/_12sdp"
+        android:progressTint="@android:color/holo_green_dark"
+        app:indicatorColor="@color/text_on_white_color"
+        app:layout_constraintBottom_toBottomOf="@+id/clipboard"
+        app:layout_constraintEnd_toEndOf="@+id/clipboard"
+        app:layout_constraintStart_toStartOf="@+id/clipboard"
+        app:layout_constraintTop_toBottomOf="@+id/clipboard"
+        app:trackColor="@color/light_grey"
+        app:trackCornerRadius="@dimen/_8sdp"
+        app:trackThickness="@dimen/_12sdp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

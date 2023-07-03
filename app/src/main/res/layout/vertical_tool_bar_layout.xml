@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/tool_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_16sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/liner_layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            android:orientation="vertical"
+            android:padding="@dimen/_4sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/undo"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/undo"
+                android:contentDescription="@string/undo"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/redo"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/redo"
+                android:contentDescription="@string/redo"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@color/item_dark_bg" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pen"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/pen"
+                android:contentDescription="@string/pen_attributes"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/brush"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/brush"
+                android:contentDescription="@string/brush_color"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/eraser"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/earser"
+                android:contentDescription="@string/eraser"
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/pen_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp"
+        android:elevation="@dimen/_12sdp"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tool_bar"
+        app:layout_constraintTop_toTopOf="@+id/tool_bar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/liner_layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            android:orientation="vertical"
+            android:padding="@dimen/_2sdp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/large_font"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/large_font"
+                android:contentDescription="@string/large_font"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/medium_font"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/medium_font"
+                android:contentDescription="@string/medium_font"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/small_font"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/small_font"
+                android:contentDescription="@string/small_font"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/color_pallete"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:padding="@dimen/_4sdp"
+                app:srcCompat="@drawable/color_lens"
+                android:contentDescription="@string/colors"
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

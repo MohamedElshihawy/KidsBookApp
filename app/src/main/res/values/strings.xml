@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Book</string>
+    <string name="spoken_letter">Spoken Letter</string>
+    <string name="large_font">Large Font</string>
+    <string name="medium_font">Medium Font</string>
+    <string name="small_font">Small Font</string>
+    <string name="colors">Colors</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="pen_options">Pen Options</string>
+    <string name="pen_attributes">Pen Attributes</string>
+    <string name="brush_color">Brush Color</string>
+    <string name="eraser">Eraser</string>
+    <string name="word_background">Word Background</string>
+    <string name="tool_bar">Tool Bar</string>
+    <string name="mic">Mic</string>
+    <string name="mic_button">mic button</string>
+</resources>
