@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:background="#f2f2f2"
+    app:cardElevation="15dp"
+    android:outlineSpotShadowColor="#1976D2"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#ece6ff"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/letter_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:outlineSpotShadowColor="#1976D2"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/letter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f4fdfa"
+                android:orientation="vertical">
+                <TextView
+                android:id="@+id/score_tv"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:width="1dp"
+                android:text="50"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="#f4fdfa"
+                />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:width="1dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:background="#000000"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:width="1dp"
+                    android:text="100"
+                    android:textSize="18dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:background="#f4fdfa"
+                    />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/letter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:text="Letter : "
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/letter_img"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/letterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:text="ALif"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/letter"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+        <TextView
+            android:id="@+id/pageNum"
+            android:textColor="#000000"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:text="pageNum : "
+            app:layout_constraintStart_toEndOf="@id/letter_img"
+            app:layout_constraintTop_toBottomOf="@id/letter" />
+
+        <TextView
+            android:id="@+id/pageNumData"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:text="20"
+            app:layout_constraintStart_toEndOf="@id/letter"
+            app:layout_constraintTop_toBottomOf="@id/letter" />
+        <TextView
+            android:id="@+id/letterSize"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:textColor="#000000"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="50dp"
+            android:text="Letter Size : "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pageNum" />
+<!--        <TextView-->
+<!--            android:id="@+id/letterSizeData"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:textColor="#000000"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="50dp"-->
+<!--            android:text="large"-->
+<!--            app:layout_constraintStart_toEndOf="@id/letterSize"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/pageNumData"/>-->
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
