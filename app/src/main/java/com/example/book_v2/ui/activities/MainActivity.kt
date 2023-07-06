@@ -20,6 +20,7 @@ import com.example.book_v2.data.oop.PageTypes
 import com.example.book_v2.databinding.ActivityMainBinding
 import com.example.book_v2.ui.fragments.ColoringPageFragment
 import com.example.book_v2.ui.fragments.IntroductionPageFragment
+import com.example.book_v2.ui.fragments.LargeLetterFragment
 import com.example.book_v2.ui.fragments.MediumLetterFragment
 
 

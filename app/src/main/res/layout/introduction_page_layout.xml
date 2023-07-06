@@ -93,19 +93,20 @@
                 android:gravity="center"
                 android:text="ع"
                 android:textColor="@color/text_on_white_color"
-                android:textSize="@dimen/_86ssp"
+                android:textSize="@dimen/_70ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/cloud"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".7"
-                app:layout_constraintStart_toEndOf="@+id/view2" />
+                app:layout_constraintStart_toEndOf="@+id/view2"
+                app:layout_constraintTop_toTopOf="@+id/cloud" />
 
             <ImageView
                 android:id="@+id/mic"
                 android:layout_width="@dimen/_36sdp"
                 android:layout_height="@dimen/_36sdp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintBottom_toTopOf="@+id/letter_txt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/volume" />

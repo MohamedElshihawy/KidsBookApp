@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.example.book.ui.fragments.PageCompletedFragment
 import com.example.book_v2.R
 import com.example.book_v2.data.oop.*
 import com.example.book_v2.databinding.LargeLetterPageLayoutBinding
@@ -277,9 +278,9 @@ class LargeLetterFragment(
             Log.e("TAG", "onTaskCompleted: canceled 1 ")
             binding.letterView2.touchEnabled = false
         }
-
         completedViews++
         totalAccuracy = +accuracy
+        Log.e("TAG", "onTaskCompleted: $totalAccuracy")
         if (completedViews == 2) {
             totalAccuracy /= 2
             val fragment = PageCompletedFragment(totalAccuracy)
@@ -305,6 +306,7 @@ class LargeLetterFragment(
     }
 
     override fun onProgressAchieved(progress: Double, overAll: Int) {
+        Log.e("TAG", "onProgressAchieved: $progress ")
         binding.userProgress.max = overAll * 2
         binding.userProgress.progress = (progress + totalAccuracy).toInt()
     }

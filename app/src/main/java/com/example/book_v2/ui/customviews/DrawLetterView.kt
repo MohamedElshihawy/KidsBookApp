@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.*
 import android.os.Handler
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.example.book_v2.data.models.Circle
@@ -19,6 +18,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(context, attributeSet) {
 
@@ -59,6 +60,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
     // private val bitmapPaint: Paint = Paint()
     private var stillWriting = true
     private val fullPath = Path()
+    private val bestFitLine = Path()
 
 
     init {
@@ -72,7 +74,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         writingPaint.isDither = true
         writingPaint.strokeCap = Paint.Cap.ROUND
         writingPaint.style = Paint.Style.STROKE
-        writingPaint.color = Color.BLACK
+        writingPaint.color = Color.BLUE
         writingPaint.strokeJoin = Paint.Join.ROUND
         writingPaint.strokeWidth = currentStrokeWidth.toFloat()
 
@@ -124,7 +126,10 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             )
         }
 
-        canvas.drawPath(fullPath,circlesPaint)
+        canvas.drawPath(fullPath, circlesPaint)
+
+        // canvas.drawPath(bestFitLine, writingPaint)
+
 
         crossMarksList.forEach { element ->
             canvas.drawPath(element, arrowPaint)
@@ -169,7 +174,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             }
             // draw guide arrow
             if (currentCircleProgressCount < circleList!!.size) {
-             //   Log.e(TAG, "onDraw: $currentCircleProgressCount")
+                //   Log.e(TAG, "onDraw: $currentCircleProgressCount")
                 val guidingArrow = drawArrow(
                     circleList!![currentCircleProgressCount].x + (radius + (width / 15)),
                     circleList!![currentCircleProgressCount].y
@@ -278,6 +283,8 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         return arrowPath
     }
 
+    private var firstPointOfLetterX = 0F
+    private var firstPointOfLetterY = 0F
     fun setCircleList(circleList: List<Circle>) {
         this.circleList = circleList
         radius = circleList[0].radius
@@ -292,17 +299,35 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         }
         mCanvas!!.drawPath(letterPath, circlesPaint)
 
-        val bestFitLine = Path()
+
         bestFitLine.moveTo(
             handWritingAccuracy.fullPath[0].x.toFloat(),
             handWritingAccuracy.fullPath[0].y.toFloat()
         )
         handWritingAccuracy.fullPath.let {
-            it.forEach { e ->
-                bestFitLine.lineTo(e.x.toFloat(), e.y.toFloat())
-              //  fullPath.addCircle(e.x.toFloat(), e.y.toFloat(), 3F, Path.Direction.CW)
+            it.forEachIndexed { index, e ->
+                if (index == 0) {
+                    bestFitLine.lineTo(e.x.toFloat(), e.y.toFloat())
+                } else {
+                    val distanceBetweenPoints = sqrt(
+                        (it[index].x - it[index - 1].x).toDouble()
+                            .pow(2.0) + (it[index].y - it[index - 1].y).toDouble()
+                            .pow(2.0)
+                    )
+
+                    if (distanceBetweenPoints > handWritingAccuracy.space) {
+                        bestFitLine.moveTo(e.x.toFloat(), e.y.toFloat())
+                    } else {
+                        bestFitLine.lineTo(e.x.toFloat(), e.y.toFloat())
+                    }
+                }
+
+                //  fullPath.addCircle(e.x.toFloat(), e.y.toFloat(), 3F, Path.Direction.CW)
             }
         }
+
+        firstPointOfLetterX = handWritingAccuracy.fullPath[0].x.toFloat()
+        firstPointOfLetterY = handWritingAccuracy.fullPath[0].y.toFloat()
     }
 
     companion object {
@@ -394,29 +419,42 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
     }
 
 
+    private var lastOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
+    private var lastHalfOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
+    private var lastQuarterOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
+    private var lastOutOfRangePoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
+
     private fun colorWritingBasedOnScore(x: Float, y: Float, score: WritingScore) {
         when (score) {
             WritingScore.Optimal -> {
                 Color.GREEN
+                //connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
                 optimalPath.addCircle(x, y, 5F, Path.Direction.CCW)
+                //lastOptimalPoint = PointF(x, y)
                 currentPath = 1
             }
 
             WritingScore.HalfOptimal -> {
                 Color.YELLOW
+                //connectPaths(lastHalfOptimalPoint, PointF(x, y), optimalPath)
                 halfOptimalPath.addCircle(x, y, 5F, Path.Direction.CCW)
+                //lastHalfOptimalPoint = PointF(x, y)
                 currentPath = 2
             }
 
             WritingScore.QuarterOptimal -> {
                 Color.rgb(255, 204, 91)
+                // connectPaths(lastQuarterOptimalPoint, PointF(x, y), optimalPath)
                 quarterOptimalPath.addCircle(x, y, 5F, Path.Direction.CCW)
+                // lastQuarterOptimalPoint = PointF(x, y)
                 currentPath = 3
             }
 
             WritingScore.OutOfRange -> {
                 Color.RED
+                //connectPaths(lastOutOfRangePoint, PointF(x, y), optimalPath)
                 outOfRangePath.addCircle(x, y, 5F, Path.Direction.CCW)
+                // lastOutOfRangePoint = PointF(x, y)
                 currentPath = 4
             }
 
@@ -426,22 +464,51 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             WritingScore.Continue -> {
                 when (currentPath) {
                     1 -> {
+                        //connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
                         optimalPath.addCircle(x, y, 3F, Path.Direction.CCW)
+                        //lastOptimalPoint = PointF(x, y)
                     }
 
                     2 -> {
+                        // connectPaths(lastHalfOptimalPoint, PointF(x, y), optimalPath)
                         halfOptimalPath.addCircle(x, y, 3F, Path.Direction.CCW)
+                        //lastHalfOptimalPoint = PointF(x, y)
                     }
 
                     3 -> {
+                        // connectPaths(lastQuarterOptimalPoint, PointF(x, y), optimalPath)
                         quarterOptimalPath.addCircle(x, y, 3F, Path.Direction.CCW)
+                        // lastQuarterOptimalPoint = PointF(x, y)
                     }
 
                     4 -> {
+                        // connectPaths(lastOutOfRangePoint, PointF(x, y), optimalPath)
                         outOfRangePath.addCircle(x, y, 3F, Path.Direction.CCW)
+                        // lastOutOfRangePoint = PointF(x, y)
+
                     }
                 }
             }
         }
     }
+
+    private fun connectPaths(lastPoint: PointF, newPoint: PointF, path: Path) {
+
+        val distanceBetweenPoints = sqrt(
+            (newPoint.x - lastPoint.x).toDouble().pow(2.0) + (newPoint.y - lastPoint.y).toDouble()
+                .pow(2.0)
+        )
+        if (distanceBetweenPoints < 3) {
+            path.quadTo(
+                lastPoint.x,
+                lastPoint.y,
+                (newPoint.x + lastPoint.x) / 2,
+                (newPoint.y + lastPoint.y) / 2
+            )
+        } else {
+            path.moveTo(newPoint.x, newPoint.y)
+        }
+    }
+
+
 }

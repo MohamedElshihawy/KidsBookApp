@@ -60,7 +60,7 @@ class HandWritingAccuracy(private val listener: TaskCompletionListener) {
                 (x - fullPath[currentPoint].x).toDouble().pow(2.0)
                         + (y - fullPath[currentPoint].y).toDouble().pow(2.0)
             )
-            if (distanceBetweenPointAndPath < (.5 * radius)) {
+            if (distanceBetweenPointAndPath < (.3 * radius)) {
                 currentPoint++
                 accuracyScore += perfectScore
                 listener.onProgressAchieved(accuracyScore, fullPath.size)
@@ -78,7 +78,7 @@ class HandWritingAccuracy(private val listener: TaskCompletionListener) {
                     )
                 }
                 if (distanceWithPreviousPoint < radius) {
-                } else if (distanceBetweenPointAndPath > (.5 * radius)
+                } else if (distanceBetweenPointAndPath > (.3 * radius)
                     && distanceBetweenPointAndPath < (radius)
                 ) {
                     currentPoint++
@@ -86,13 +86,13 @@ class HandWritingAccuracy(private val listener: TaskCompletionListener) {
                     listener.onProgressAchieved(accuracyScore, fullPath.size)
                     return WritingScore.HalfOptimal
                 } else if (distanceBetweenPointAndPath > (radius)
-                    && distanceBetweenPointAndPath <= (1.5 * radius)
+                    && distanceBetweenPointAndPath <= (2 * radius)
                 ) {
                     currentPoint++
                     accuracyScore += quarterScore
                     listener.onProgressAchieved(accuracyScore, fullPath.size)
                     return WritingScore.QuarterOptimal
-                } else if (distanceBetweenPointAndPath > 1.5 * radius) {
+                } else if (distanceBetweenPointAndPath > 2 * radius) {
                     accuracyScore -= halfScore
                     listener.onOutOfPathLineDetected(x.toFloat(), y.toFloat() ,accuracyScore)
                     return WritingScore.OutOfRange
@@ -101,7 +101,8 @@ class HandWritingAccuracy(private val listener: TaskCompletionListener) {
         } else {
             listener.onTaskCompleted(accuracyScore)
         }
-        Log.e("TAG", "observeUserHandWriting: continue")
+
+
         return WritingScore.Continue
     }
 
