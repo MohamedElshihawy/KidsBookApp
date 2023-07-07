@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.book_v2.R
+import com.example.book_v2.data.database.ReportData
 import com.example.book_v2.data.oop.SmallLetterPage
 import com.example.book_v2.databinding.SmallLetterPageLayoutBinding
 import com.example.book_v2.services.interfaces.PageNavListeners
@@ -22,13 +23,14 @@ import com.example.book_v2.services.setHighLightedText
 import com.example.book_v2.ui.Effects.Animation
 import com.example.book_v2.ui.activities.BookCoverActivity.Companion.colorArr
 import com.example.book_v2.ui.customviews.DrawLetterView
+import com.example.book_v2.utilities.DBOperations
 import com.example.book_v2.utilities.DrawLetters
 import com.example.book_v2.utilities.TextToSpeechSetUp
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SmallLetterFragment(
     private val listener: PageNavListeners,
-    private val pageData: SmallLetterPage
+    private val pageData: SmallLetterPage,
 ) : Fragment(), TaskCompletionListener {
 
     private lateinit var binding: SmallLetterPageLayoutBinding
@@ -45,7 +47,7 @@ class SmallLetterFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = SmallLetterPageLayoutBinding.inflate(layoutInflater, container, false)
         viewsList.add(binding.letter1)
@@ -67,14 +69,13 @@ class SmallLetterFragment(
         setUpPage()
         setListeners()
 
-
         val smallLetterData = DrawLetters.getAllPointsFromFile(pageData.smallLetterIndexesFile)
 
         binding.letter1.post {
             pageData.smallLetterRepresentation = DrawLetters.ShiftPointsInScreen(
                 binding.letter1.width,
                 binding.letter1.height,
-                smallLetterData
+                smallLetterData,
             )
 
             for (item in viewsList) {
@@ -102,7 +103,6 @@ class SmallLetterFragment(
                 textToSpeech.stop()
                 textToSpeech.speak(pageData.letter, TextToSpeech.QUEUE_ADD, null, null)
             }
-
         }
 
         binding.toolIcon.setOnClickListener {
@@ -139,7 +139,8 @@ class SmallLetterFragment(
                 noColorOption = true,
                 listener = { color ->
                     strokeColor = color
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
             strokeSize = 48
             for (item in viewsList) {
@@ -244,7 +245,6 @@ class SmallLetterFragment(
         }
 
         binding.toolBar.redo.setOnClickListener {
-
             when (currentPanel) {
                 0 -> {
                     binding.letter1.redoLastAction()
@@ -293,7 +293,8 @@ class SmallLetterFragment(
                     for (item in viewsList) {
                         item.currentStrokeColor = strokeColor
                     }
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
         }
 
@@ -349,6 +350,16 @@ class SmallLetterFragment(
             val celebrate = Animation.getInstance()
             celebrate.drawable = ResourcesCompat.getDrawable(resources, R.drawable.star, null)
             // binding.celebrationView.start(celebrate.startRainAnimation())
+            context?.let {
+                DBOperations.storeReport(
+                    it,
+                    ReportData(
+                        pageData.pageNum.toInt(),
+                        pageData.letter,
+                        totalAccuracy,
+                    ),
+                )
+            }
         }
     }
 
@@ -397,5 +408,4 @@ class SmallLetterFragment(
         binding.userProgress.max = overAll * 9
         binding.userProgress.progress = (totalAccuracy + progress).toInt()
     }
-
 }

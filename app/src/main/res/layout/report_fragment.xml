@@ -1,42 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color">
-
-
-    <nl.dionsegijn.konfetti.xml.KonfettiView
-        android:id="@+id/celebrate"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sun_cloud"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:scaleType="fitStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sun_and_clouds" />
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/speaking_mic_image"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:contentDescription="@string/mic_button"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toTopOf="@+id/symbol3"
-        app:layout_constraintEnd_toEndOf="@+id/symbol3"
-        app:layout_constraintStart_toStartOf="@+id/symbol3"
-        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
-        app:srcCompat="@drawable/voice_recognition_ic" />
+    android:background="#67d2de">
 
     <include
         android:id="@+id/top_of_page"
@@ -44,15 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        android:id="@+id/bottom_of_page"
-        layout="@layout/page_bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back_button"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#67d2de"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/left_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/symbol1"
@@ -122,34 +91,24 @@
         android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
         app:cardCornerRadius="@dimen/_24sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_of_page"
+        app:layout_constraintBottom_toTopOf="@+id/back_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top_of_page"
-        app:layout_constraintWidth_percent=".6"
+        app:layout_constraintTop_toBottomOf="@+id/top_of_page"
+        app:layout_constraintWidth_percent=".9"
         app:strokeColor="@color/text_on_white_color"
         app:strokeWidth="@dimen/_1sdp">
 
-       <com.example.book_v2.ui.customviews.LetterPredictionView
-           android:id="@+id/write_letter"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </com.google.android.material.card.MaterialCardView>
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/listening_now"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="@dimen/_8sdp"
-        android:scaleType="fitXY"
-        android:visibility="gone"
-        app:srcCompat="@drawable/listening_now" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

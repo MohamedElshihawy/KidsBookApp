@@ -15,6 +15,7 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.book.ui.fragments.PageCompletedFragment
 import com.example.book_v2.R
+import com.example.book_v2.data.database.ReportData
 import com.example.book_v2.data.oop.MediumLetterPage
 import com.example.book_v2.databinding.MediumLetterPageLayoutBinding
 import com.example.book_v2.services.interfaces.PageNavListeners
@@ -22,14 +23,15 @@ import com.example.book_v2.services.interfaces.TaskCompletionListener
 import com.example.book_v2.services.loadImageIntoView
 import com.example.book_v2.ui.Effects.Animation
 import com.example.book_v2.ui.activities.BookCoverActivity.Companion.colorArr
+import com.example.book_v2.utilities.DBOperations
 import com.example.book_v2.utilities.DrawLetters
 import com.example.book_v2.utilities.TextToSpeechSetUp
 import dev.sasikanth.colorsheet.ColorSheet
 
 class MediumLetterFragment(
-    private val listener: PageNavListeners, private val pageData: MediumLetterPage
+    private val listener: PageNavListeners,
+    private val pageData: MediumLetterPage,
 ) : Fragment(), TaskCompletionListener {
-
 
     private lateinit var binding: MediumLetterPageLayoutBinding
     private lateinit var textToSpeech: TextToSpeech
@@ -42,7 +44,9 @@ class MediumLetterFragment(
     private var strokeColor = Color.BLACK
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = MediumLetterPageLayoutBinding.inflate(layoutInflater, container, false)
 
@@ -52,7 +56,6 @@ class MediumLetterFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setListeners()
         setUpPage()
 
@@ -60,7 +63,9 @@ class MediumLetterFragment(
 
         binding.letterView1.post {
             val final = DrawLetters.ShiftPointsInScreen(
-                binding.letterView1.width, binding.letterView1.height, largeLetterData
+                binding.letterView1.width,
+                binding.letterView1.height,
+                largeLetterData,
             )
             binding.letterView1.setCircleList(final)
             binding.letterView2.setCircleList(final)
@@ -68,9 +73,7 @@ class MediumLetterFragment(
             binding.letterView4.setCircleList(final)
             pageData.mediumLetterRepresentation = final
         }
-
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
@@ -132,7 +135,6 @@ class MediumLetterFragment(
                 binding.toolBar.pen.setBackgroundColor(resources.getColor(R.color.light_grey))
                 isPenBarOpen = false
             }
-
         }
 
         binding.toolBar.brush.setOnClickListener {
@@ -142,7 +144,6 @@ class MediumLetterFragment(
             }).show(requireActivity().supportFragmentManager)
             strokeSize = 48
             updateStrokeWidth(strokeSize)
-
         }
 
         binding.toolBar.undo.setOnClickListener {
@@ -150,15 +151,19 @@ class MediumLetterFragment(
                 0 -> {
                     binding.letterView1.undoLastAction()
                 }
+
                 1 -> {
                     binding.letterView2.undoLastAction()
                 }
+
                 2 -> {
                     binding.letterView3.undoLastAction()
                 }
+
                 3 -> {
                     binding.letterView4.undoLastAction()
                 }
+
                 else -> {
                     Toast.makeText(requireContext(), "nothing to undo", Toast.LENGTH_SHORT).show()
                 }
@@ -170,19 +175,22 @@ class MediumLetterFragment(
                 0 -> {
                     binding.letterView1.redoLastAction()
                 }
+
                 1 -> {
                     binding.letterView2.redoLastAction()
                 }
+
                 2 -> {
                     binding.letterView3.redoLastAction()
                 }
+
                 3 -> {
                     binding.letterView4.redoLastAction()
                 }
+
                 else -> {
                     Toast.makeText(requireContext(), "nothing to redo", Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
 
@@ -245,7 +253,7 @@ class MediumLetterFragment(
 
     override fun onTaskCompleted(accuracy: Double) {
         completedViews++
-        totalAccuracy =+ accuracy
+        totalAccuracy = +accuracy
         if (completedViews == 4) {
             totalAccuracy /= 4
             val fragment = PageCompletedFragment(totalAccuracy)
@@ -254,23 +262,34 @@ class MediumLetterFragment(
             celebrate.drawable = ResourcesCompat.getDrawable(resources, R.drawable.star, null)
             binding.celebrationView.start(celebrate.startRainAnimation())
 
-
-
+            context?.let {
+                DBOperations.storeReport(
+                    it,
+                    ReportData(
+                        pageData.pageNum.toInt(),
+                        pageData.letter,
+                        totalAccuracy,
+                    ),
+                )
+            }
         }
     }
 
-    override fun onOutOfPathLineDetected(x: Float, y: Float, newScore:Double) {
+    override fun onOutOfPathLineDetected(x: Float, y: Float, newScore: Double) {
         binding.userProgress.progress = (newScore / 2).toInt()
         when (currentPanel) {
             0 -> {
                 binding.letterView1.handleInaccurateHandWriting(x, y)
             }
+
             1 -> {
                 binding.letterView2.handleInaccurateHandWriting(x, y)
             }
+
             2 -> {
                 binding.letterView3.handleInaccurateHandWriting(x, y)
             }
+
             3 -> {
                 binding.letterView4.handleInaccurateHandWriting(x, y)
             }
@@ -281,6 +300,4 @@ class MediumLetterFragment(
         binding.userProgress.max = overAll * 4
         binding.userProgress.progress = (progress + totalAccuracy).toInt()
     }
-
-
 }

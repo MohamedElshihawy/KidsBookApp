@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.Manifest
 import android.animation.ArgbEvaluator
@@ -21,13 +21,16 @@ import androidx.fragment.app.Fragment
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.book_v2.R
+import com.example.book_v2.data.database.ReportData
 import com.example.book_v2.data.oop.LetterPronunciationPage
 import com.example.book_v2.databinding.LetterPronunciationPageLayoutBinding
 import com.example.book_v2.services.interfaces.PageNavListeners
+import com.example.book_v2.utilities.DBOperations
 
 class LetterPronunciationPageFragment(
     private val listener: PageNavListeners,
-    private val pageData: LetterPronunciationPage
+    private val pageData: LetterPronunciationPage,
+
 ) :
     Fragment(), RecognitionListener {
 
@@ -38,12 +41,12 @@ class LetterPronunciationPageFragment(
     private val recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
     private var soundPlayer: MediaPlayer? = null
     private lateinit var blinkingAnimation: ObjectAnimator
-
+    private var numOfTries = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = LetterPronunciationPageLayoutBinding.inflate(layoutInflater, container, false)
 
@@ -56,41 +59,35 @@ class LetterPronunciationPageFragment(
             }
         requestMultiplePermissions.launch(
             arrayOf(
-                Manifest.permission.RECORD_AUDIO
-            )
+                Manifest.permission.RECORD_AUDIO,
+            ),
         )
         speech.setRecognitionListener(this)
         val recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ar-EG")
         recognizerIntent.putExtra(
             RecognizerIntent.EXTRA_CALLING_PACKAGE,
-            requireContext().packageName
+            requireContext().packageName,
         )
         recognizerIntent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
+            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH,
         )
 
         recognizerIntent.putExtra(
             RecognizerIntent.EXTRA_CALLING_PACKAGE,
-            requireContext().packageName
+            requireContext().packageName,
         )
 
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
 
-
-
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setUpPage()
         setListeners()
-
     }
-
 
     private fun setUpPage() {
         binding.topOfPage.pageTitle.text = pageData.title
@@ -117,7 +114,6 @@ class LetterPronunciationPageFragment(
         }
     }
 
-
     @Override
     override fun onResume() {
         super.onResume()
@@ -135,7 +131,6 @@ class LetterPronunciationPageFragment(
         soundPlayer?.release()
         super.onDestroy()
     }
-
 
     override fun onReadyForSpeech(params: Bundle?) {
         Log.e(TAG, "onReadyForSpeech: ready for speech")
@@ -163,18 +158,17 @@ class LetterPronunciationPageFragment(
         Toast.makeText(
             requireContext(),
             "something went wrong please check your internet connection or try again later ",
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
+        numOfTries++
         binding.listeningNow.visibility = View.GONE
-
     }
 
     override fun onResults(results: Bundle?) {
-
         val matches = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
 
-        matches?.get(0)?.let {
-            if (it == pageData.letterPronunciation || it == pageData.alternativeLetterPronunciation) {
+        matches?.get(0)?.let { match ->
+            if (match == pageData.letterPronunciation || match == pageData.alternativeLetterPronunciation) {
                 soundPlayer = MediaPlayer.create(requireContext(), R.raw.right_answer_sound)
                 blinkingAnimation =
                     ObjectAnimator.ofInt(
@@ -182,8 +176,19 @@ class LetterPronunciationPageFragment(
                         "backgroundColor",
                         Color.WHITE,
                         Color.GREEN,
-                        Color.WHITE
+                        Color.WHITE,
+
                     )
+                context?.let {
+                    DBOperations.storeReport(
+                        it,
+                        ReportData(
+                            pageData.pageNum.toInt(),
+                            pageData.letterTxt,
+                            100.0,
+                        ),
+                    )
+                }
             } else {
                 soundPlayer = MediaPlayer.create(requireContext(), R.raw.wrong_answer_sound)
                 blinkingAnimation =
@@ -192,7 +197,7 @@ class LetterPronunciationPageFragment(
                         "backgroundColor",
                         Color.WHITE,
                         Color.RED,
-                        Color.WHITE
+                        Color.WHITE,
                     )
             }
             blinkingAnimation.duration = 500
@@ -227,6 +232,4 @@ class LetterPronunciationPageFragment(
         }
         return message
     }
-
-
 }

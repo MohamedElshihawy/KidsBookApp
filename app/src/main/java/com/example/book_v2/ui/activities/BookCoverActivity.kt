@@ -1,9 +1,8 @@
-package com.example.book_v2.ui.activities
+package com.example.book_v2.ui.activities // ktlint-disable package-name
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -11,50 +10,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.book_v2.data.viewmodels.BaseActivityViewModel
 import com.example.book_v2.databinding.ActivityBookCoverBinding
-
-import kotlinx.coroutines.*
+import kotlinx.coroutines.* // ktlint-disable no-wildcard-imports
 import java.io.File
 import java.util.ArrayList
 
 class BookCoverActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityBookCoverBinding
     private lateinit var viewModel: BaseActivityViewModel
     private lateinit var pagesData: ArrayList<String>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityBookCoverBinding.inflate(
             LayoutInflater.from(
-                this
-            )
+                this,
+            ),
         )
         setContentView(binding.root)
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
             )
         }
 
         viewModel = ViewModelProvider(this)[BaseActivityViewModel::class.java]
 
         viewModel.filesMetaDataLiveData.observe(this) {
-
             pagesData = it as ArrayList<String>
-            Log.e(TAG, "onCreate: ${it.size}" )
+            Log.e(TAG, "onCreate: ${it.size}")
         }
 
         setListeners()
@@ -62,11 +57,9 @@ class BookCoverActivity : AppCompatActivity() {
         viewModel.getMetaDataOfAllPages(DATA_PATH)
 
         runStartAnimation()
-
     }
 
     private fun runStartAnimation() {
-
         MainScope().launch {
             val zoomInAnimation = YoYo.with(Techniques.ZoomIn)
                 .duration(3000)
@@ -115,18 +108,26 @@ class BookCoverActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.startButton.setOnClickListener {
             if (pagesData.size > 0) {
-                startActivity(Intent(this, MainActivity::class.java)
-                    .apply {
-                        putStringArrayListExtra("DATA", pagesData)
-                    })
+                startActivity(
+                    Intent(this, MainActivity::class.java)
+                        .apply {
+                            putStringArrayListExtra("DATA", pagesData)
+                        },
+                )
             }
+        }
+
+        binding.reportButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
     companion object {
-        val DATA_PATH = (Environment.getExternalStorageDirectory().absolutePath
-                + File.separator + "Data")
-
+        val DATA_PATH = (
+            Environment.getExternalStorageDirectory().absolutePath +
+                File.separator + "Data"
+            )
 
         const val TAG = "MainActivity"
 
@@ -140,10 +141,8 @@ class BookCoverActivity : AppCompatActivity() {
                 Color.CYAN,
                 Color.GREEN,
                 Color.RED,
-                Color.DKGRAY
+                Color.DKGRAY,
             )
         }
     }
-
-
 }

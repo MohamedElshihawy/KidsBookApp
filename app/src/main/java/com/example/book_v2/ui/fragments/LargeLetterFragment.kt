@@ -17,6 +17,8 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.book.ui.fragments.PageCompletedFragment
 import com.example.book_v2.R
+import com.example.book_v2.data.database.ReportData
+import com.example.book_v2.data.database.database
 import com.example.book_v2.data.oop.*
 import com.example.book_v2.databinding.LargeLetterPageLayoutBinding
 import com.example.book_v2.services.interfaces.PageNavListeners
@@ -25,8 +27,8 @@ import com.example.book_v2.services.loadImageIntoView
 import com.example.book_v2.services.setHighLightedText
 import com.example.book_v2.services.uriToBitmap
 import com.example.book_v2.ui.Effects.Animation
-
 import com.example.book_v2.ui.activities.BookCoverActivity.Companion.colorArr
+import com.example.book_v2.utilities.DBOperations
 import com.example.book_v2.utilities.DrawLetters
 import com.example.book_v2.utilities.TextToSpeechSetUp
 import dev.sasikanth.colorsheet.ColorSheet
@@ -36,7 +38,7 @@ import kotlin.random.Random
 
 class LargeLetterFragment(
     private val listener: PageNavListeners,
-    private val pageData: LargeLetterPage
+    private val pageData: LargeLetterPage,
 ) : Fragment(), TaskCompletionListener {
 
     private lateinit var binding: LargeLetterPageLayoutBinding
@@ -47,6 +49,7 @@ class LargeLetterFragment(
     private var currentPanel = -1
     private var completedViews = 0
     private var totalAccuracy = 0.0
+    private var tt = 0.0
     private var strokeColor = Color.BLACK
     private lateinit var swatches: List<Palette.Swatch>
     private var arr = IntArray(20)
@@ -54,7 +57,7 @@ class LargeLetterFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = LargeLetterPageLayoutBinding.inflate(layoutInflater, container, false)
 
@@ -64,7 +67,6 @@ class LargeLetterFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setListeners()
         setUpPage()
 
@@ -74,7 +76,7 @@ class LargeLetterFragment(
             val final = DrawLetters.ShiftPointsInScreen(
                 binding.letterView1.width,
                 binding.letterView1.height,
-                largeLetterData
+                largeLetterData,
             )
             binding.letterView2.setCircleList(final)
             binding.letterView1.setCircleList(final)
@@ -99,10 +101,12 @@ class LargeLetterFragment(
         }
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
-        binding.bottomOfPage.nextBtn.setOnClickListener { listener.nextPage() }
+        binding.bottomOfPage.nextBtn.setOnClickListener {
+            listener.nextPage()
+            Log.e("TAG", "onTaskCompleted: " + totalAccuracy)
+        }
         binding.bottomOfPage.previousBtn.setOnClickListener { listener.previousPage() }
 
         binding.viewCover.lock.setOnClickListener {
@@ -168,7 +172,8 @@ class LargeLetterFragment(
                     strokeColor = color
                     binding.letterView1.currentStrokeColor = strokeColor
                     binding.letterView2.currentStrokeColor = strokeColor
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
 
             strokeSize = 24
@@ -216,7 +221,8 @@ class LargeLetterFragment(
                     strokeColor = color
                     binding.letterView1.currentStrokeColor = strokeColor
                     binding.letterView2.currentStrokeColor = strokeColor
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
         }
 
@@ -256,7 +262,7 @@ class LargeLetterFragment(
         setHighLightedText(
             binding.letterTxt,
             pageData.letter,
-            colorArr[Random.nextInt(colorArr.size - 1)]
+            colorArr[Random.nextInt(colorArr.size - 1)],
         )
 
         binding.letterView1.currentStrokeColor = strokeColor
@@ -269,7 +275,6 @@ class LargeLetterFragment(
         binding.letterView2.completionListener = this
     }
 
-
     override fun onTaskCompleted(accuracy: Double) {
         if (currentPanel == 0) {
             Log.e("TAG", "onTaskCompleted: canceled 0 ")
@@ -278,9 +283,10 @@ class LargeLetterFragment(
             Log.e("TAG", "onTaskCompleted: canceled 1 ")
             binding.letterView2.touchEnabled = false
         }
+
         completedViews++
         totalAccuracy = +accuracy
-        Log.e("TAG", "onTaskCompleted: $totalAccuracy")
+        Log.e("TAG", "onTaskCompleted: " + totalAccuracy)
         if (completedViews == 2) {
             totalAccuracy /= 2
             val fragment = PageCompletedFragment(totalAccuracy)
@@ -288,9 +294,18 @@ class LargeLetterFragment(
             val celebrate = Animation.getInstance()
             celebrate.drawable = ResourcesCompat.getDrawable(resources, R.drawable.star, null)
             binding.celebrationView.start(celebrate.startRainAnimation())
+            context?.let {
+                DBOperations.storeReport(
+                    it,
+                    ReportData(
+                        pageData.pageNum.toInt(),
+                        pageData.letter,
+                        totalAccuracy,
+                    ),
+                )
+            }
         }
     }
-
 
     override fun onOutOfPathLineDetected(x: Float, y: Float, newScore: Double) {
         binding.userProgress.progress = (newScore / 2).toInt()
@@ -306,10 +321,7 @@ class LargeLetterFragment(
     }
 
     override fun onProgressAchieved(progress: Double, overAll: Int) {
-        Log.e("TAG", "onProgressAchieved: $progress ")
         binding.userProgress.max = overAll * 2
         binding.userProgress.progress = (progress + totalAccuracy).toInt()
     }
-
-
 }

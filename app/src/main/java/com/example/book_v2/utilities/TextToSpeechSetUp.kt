@@ -6,20 +6,20 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import java.util.*
+import java.util.Locale
 
 object TextToSpeechSetUp {
 
     fun newInstanceTTS(context: Context): TextToSpeech {
         var textToSpeech: TextToSpeech? = null
         textToSpeech = TextToSpeech(
-            context
+            context,
         ) {
             if (it == TextToSpeech.SUCCESS) {
                 val result = textToSpeech?.setLanguage(Locale("ar_EG"))
                 if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
                     Log.e("error", "onViewCreated: arabic missing data ")
-                   // installVoiceData(context)
+                    installVoiceData(context)
                 } else {
                     Log.e("error", "onViewCreated: something happened ")
                 }

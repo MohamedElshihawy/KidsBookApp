@@ -109,6 +109,7 @@
         android:visibility="invisible"
         app:layout_constraintGuide_percent=".8" />
 
+
     <TextView
         android:id="@+id/app_slogan_txt"
         android:layout_width="0dp"
@@ -128,28 +129,43 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/start_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_width="@dimen/_64sdp"
+        android:layout_height="@dimen/_64sdp"
+        android:layout_marginEnd="@dimen/_70sdp"
         android:backgroundTint="@color/white"
-        android:fontFamily="@font/blabello"
         android:gravity="center"
         android:shadowRadius="16"
-        android:text="ابدا"
-        android:textAlignment="gravity"
         android:textColor="@color/text_on_white_color"
-        android:textSize="@dimen/_32ssp"
-        android:textStyle="bold"
-        android:visibility="gone"
         app:cornerRadius="@dimen/_16sdp"
+        app:icon="@drawable/play"
+        app:iconSize="@dimen/_48sdp"
+        app:iconTint="@color/text_on_white_color"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/right_direction_palme_tree"
-        app:layout_constraintStart_toEndOf="@+id/left_direction_palme_tree"
+        app:layout_constraintTop_toBottomOf="@+id/app_slogan_txt"
         app:rippleColor="@color/primary_color"
         app:strokeColor="@color/text_on_white_color"
         app:strokeWidth="@dimen/_1sdp" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/report_button"
+        android:layout_width="@dimen/_64sdp"
+        android:layout_height="@dimen/_64sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:shadowRadius="16"
+        android:textColor="@color/text_on_white_color"
+        app:cornerRadius="@dimen/_16sdp"
+        app:icon="@drawable/report"
+        app:iconSize="@dimen/_48sdp"
+        app:iconTint="@color/text_on_white_color"
+        app:layout_constraintBottom_toBottomOf="@+id/start_button"
+        app:layout_constraintEnd_toStartOf="@+id/start_button"
+        app:layout_constraintTop_toTopOf="@+id/start_button"
+        app:rippleColor="@color/primary_color"
+        app:strokeColor="@color/text_on_white_color"
+        app:strokeWidth="@dimen/_1sdp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
