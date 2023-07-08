@@ -7,8 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="com.samsung.android.sdk.pen.permission.PEN_SDK_PERMISSION" />
-    <uses-feature android:name="com.samsung.android.sdk.pen.require_signature" android:required="false" />
 
+    <uses-feature
+        android:name="com.samsung.android.sdk.pen.require_signature"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +21,9 @@
         android:screenOrientation="sensorLandscape"
         android:supportsRtl="false"
         android:theme="@style/Theme.Book">
+        <activity
+            android:name=".ui.activities.ReportActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.signInUpScreen.SignInUpActivity"
             android:exported="false" />

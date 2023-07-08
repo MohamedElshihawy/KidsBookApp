@@ -40,11 +40,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ReportData item = dataArray.get(position);
-        holder.letter.setText(item.getLetter() + "الحرف : ");
+        holder.letter.setText("الحرف : " + item.getLetter());
         holder.score.setText(item.getScore() + "");
-        holder.pageNum.setText(item.getPageNum() + "رقم الصفحة : ");
-
-
+        holder.pageNum.setText("رقم الصفحة : " + item.getPageNum());
     }
 
     @Override
@@ -60,7 +58,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
             super(itemView);
             letter = itemView.findViewById(R.id.letterName);
             score = itemView.findViewById(R.id.score_tv);
-            pageNum = itemView.findViewById(R.id.page_num);
+            pageNum = itemView.findViewById(R.id.report_page_num);
 
         }
     }

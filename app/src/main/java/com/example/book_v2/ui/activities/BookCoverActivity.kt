@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowInsets
@@ -49,7 +48,6 @@ class BookCoverActivity : AppCompatActivity() {
 
         viewModel.filesMetaDataLiveData.observe(this) {
             pagesData = it as ArrayList<String>
-            Log.e(TAG, "onCreate: ${it.size}")
         }
 
         setListeners()
@@ -99,8 +97,12 @@ class BookCoverActivity : AppCompatActivity() {
                 binding.appSloganTxt.visibility = View.VISIBLE
                 fadeInAnimation.playOn(binding.appSloganTxt)
                 delay(1500)
+
                 binding.startButton.visibility = View.VISIBLE
                 bounceInAnimation.playOn(binding.startButton)
+
+                binding.reportButton.visibility = View.VISIBLE
+                bounceInAnimation.playOn(binding.reportButton)
             }
         }
     }
@@ -118,7 +120,7 @@ class BookCoverActivity : AppCompatActivity() {
         }
 
         binding.reportButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ReportActivity::class.java)
             startActivity(intent)
         }
     }

@@ -32,17 +32,6 @@ public class database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(
-
-                /* "CREATE TABLE "+TABLE_NAME+" " +
-                        "("+ID_COL+" INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                        ""+LETTERNAME_COL+" TEXT  ,"+
-                        ""+ LARGE_LETTER_COL +" REAL," +
-                        ""+ MEDUIM_LETTER_COL +" REAL," +
-                        ""+ SMALL_LETTER_COL +" REAL," +
-                        ""+ READ_TEST_COL +" REAL," +
-                        ""+ WRITE_TEST_COL +" REAL," +
-                        ""+ TOTAL_COL +" INTEGER )");*/
-
                 "CREATE TABLE " + TABLE_NAME + " " +
                         "(" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
                         "" + LETTERNAME_COL + " TEXT  ," +
@@ -100,7 +89,6 @@ public class database extends SQLiteOpenHelper {
                 int pagenum = cursor.getInt(cursor.getColumnIndex(PAGENUM_COL));
                 ReportData c = new ReportData(id, pagenum, letter, score);
                 data.add(c);
-
             } while (cursor.moveToNext());
             cursor.close();
         }

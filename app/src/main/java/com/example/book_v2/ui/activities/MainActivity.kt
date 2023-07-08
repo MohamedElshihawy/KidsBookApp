@@ -1,5 +1,6 @@
 package com.example.book_v2.ui.activities // ktlint-disable package-name
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -110,62 +111,6 @@ class MainActivity : AppCompatActivity(), PageNavListeners {
         pagesNavigation(currentPageNum)
     }
 
-    private fun addFrags(pagePosition: Int): Fragment {
-        val pageData = bookPages[pagePosition]
-        val fragment: Fragment
-        when (pageData.pageType) {
-            PageTypes.INTRODUCTION_PAGE -> {
-                fragment = IntroductionPageFragment(this, pageData as IntroductionPage)
-            }
-
-            PageTypes.LETTER_PAGE -> {
-                fragment = LargeLetterFragment(this, pageData as LargeLetterPage)
-            }
-
-            PageTypes.MEDIUM_LETTER -> {
-                fragment = MediumLetterFragment(this, pageData as MediumLetterPage)
-            }
-
-            PageTypes.SMALL_LETTER -> {
-                fragment = SmallLetterFragment(this, pageData as SmallLetterPage)
-            }
-
-            PageTypes.FREE_MATCHING_PAGE -> {
-                fragment = FreeMatchingFragment(this, pageData as FreeMatchingPage)
-            }
-
-            PageTypes.CONSTRAINED_MATCHING_PAGE -> {
-                fragment = ConstrainedMatchingFragment(this, pageData as ConstrainedMatchingPage)
-            }
-
-            PageTypes.COLORING_PAGE -> {
-                fragment = ColoringPageFragment(this, pageData as ColoringPage)
-            }
-
-            PageTypes.LETTER_FIRST_PREVIEW_PAGE -> {
-                fragment = LetterFirstPreviewFragment(this, pageData as LetterFirstPreviewPage)
-            }
-
-            PageTypes.LETTER_SECOND_PREVIEW_PAGE -> {
-                fragment = LetterSecondPreviewFragment(this, pageData as LetterSecondPreviewPage)
-            }
-
-            PageTypes.STORY_TELLING_PAGE -> {
-                fragment = StoryTellingPageFragment(this, pageData as StoryTellingPage)
-            }
-
-            PageTypes.LETTER_PRONUNCIATION_PAGE -> {
-                fragment =
-                    LetterPronunciationPageFragment(this, pageData as LetterPronunciationPage)
-            }
-
-            else -> {
-                throw Throwable("Error while transition to next page")
-            }
-        }
-        return fragment
-    }
-
     private fun pagesNavigation(pagePosition: Int) {
         val pageData = bookPages[pagePosition]
         val fragment: Fragment
@@ -256,6 +201,8 @@ class MainActivity : AppCompatActivity(), PageNavListeners {
         if (currentPageNum > 0) {
             currentPageNum--
             pagesNavigation(currentPageNum)
+        } else {
+            this.onBackPressed()
         }
     }
 }

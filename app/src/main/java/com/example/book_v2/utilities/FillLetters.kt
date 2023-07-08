@@ -23,7 +23,7 @@ class FillLetters {
                 val xRange = Range(xStart, xEnd)
                 val yRange = Range(yStart, yEnd)
                 if (xRange.contains(x) && yRange.contains(y)) {
-                   return true
+                    return true
                 }
             }
         }

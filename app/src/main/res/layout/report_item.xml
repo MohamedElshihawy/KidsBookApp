@@ -6,23 +6,23 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="36dp"
-    app:cardElevation="16dp"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#ffe88e"
-        android:padding="@dimen/_16sdp">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/letter_img"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:cardCornerRadius="@dimen/_40sdp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="40dp"
             app:strokeWidth="@dimen/_1sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_8sdp"
             app:strokeColor="@color/text_on_white_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
                     android:text="50"
                     android:textAlignment="center"
                     android:textColor="@color/text_on_white_color"
-                    android:textSize="@dimen/_20ssp" />
+                    android:textSize="24sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -62,45 +62,46 @@
                     android:text="100"
                     android:textAlignment="center"
                     android:textColor="@color/text_on_white_color"
-                    android:textSize="@dimen/_20ssp" />
-
+                    android:textSize="24sp" />
             </LinearLayout>
 
 
         </com.google.android.material.card.MaterialCardView>
 
 
-        <TextView
-            android:id="@+id/letterName"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/blabello"
-            android:text="الحرف : أ"
-            android:textAlignment="center"
-            android:textColor="@color/text_on_white_color"
-            android:textSize="@dimen/_20ssp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/pageNum"
-            app:layout_constraintTop_toTopOf="@+id/letter_img" />
+            android:orientation="vertical"
+            android:gravity="end"
+            >
 
-        <TextView
-            android:id="@+id/pageNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_110sdp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/blabello"
-            android:text="رقم الصفحة :  1"
-            android:textColor="@color/text_on_white_color"
-            android:textSize="@dimen/_20ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/letter_img" />
+            <TextView
+                android:id="@+id/letterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/blabello"
+                android:text="الحرف : أ"
+                android:singleLine="true"
+                android:textColor="@color/text_on_white_color"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/report_page_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/blabello"
+                android:text="رقم الصفحة :  1"
+                android:singleLine="true"
+                android:textColor="@color/text_on_white_color"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.cardview.widget.CardView>
