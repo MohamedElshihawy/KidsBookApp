@@ -29,7 +29,6 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
 
     // var bitmap = BitmapFactory.decodeFile()
 
-
     init {
         paint.isAntiAlias = true
         paint.isDither = true
@@ -48,7 +47,6 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
 //        writingPaint.strokeWidth = 5F
     }
 
-
     private fun onTouchStart(x: Float, y: Float) {
         path = Path()
         currentPaths.add(Stroke(currentStrokeColor, currentStrokeWidth, path))
@@ -66,7 +64,6 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
             mX = x
             mY = y
         }
-
     }
 
     private fun onTouchUp() {
@@ -74,18 +71,16 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
         canvas.drawPath(path, paint)
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.save()
 
-     // canvas.drawColor(Color.BLUE)
+        // canvas.drawColor(Color.BLUE)
         bitmap?.let {
             canvas.drawBitmap(bitmap!!, 0f, 0f, paint)
         }
 
         canvas.drawColor(0x00AAAAAA)
-
 
         for (stroke in currentPaths) {
             paint.color = stroke.color
@@ -94,7 +89,6 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
         }
         canvas.restore()
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -105,10 +99,12 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
                 onTouchStart(x, y)
                 invalidate()
             }
+
             MotionEvent.ACTION_MOVE -> {
                 onTouchMove(x, y)
                 invalidate()
             }
+
             MotionEvent.ACTION_UP -> {
                 onTouchUp()
                 invalidate()
@@ -118,11 +114,11 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
         return true
     }
 
-    fun saveBitmap(path:String): Bitmap {
+    fun saveBitmap(path: String): Bitmap {
         bitmap!!.compress(
             Bitmap.CompressFormat.PNG,
             100,
-            FileOutputStream(File(path))
+            FileOutputStream(File(path)),
         )
         Log.d("TAG", "saveBitmap: $")
         return bitmap!!
@@ -134,16 +130,16 @@ class ColoringImageView(context: Context?, attributeSet: AttributeSet?) :
     }
 
     fun undoLastAction() {
-        if (currentPaths.size > 0)
+        if (currentPaths.size > 0) {
             deletedPaths.add(currentPaths.removeLast())
+        }
         invalidate()
     }
 
     fun redoLastAction() {
-        if (deletedPaths.size > 0)
+        if (deletedPaths.size > 0) {
             currentPaths.add(deletedPaths.removeLast())
+        }
         invalidate()
     }
-
-
 }

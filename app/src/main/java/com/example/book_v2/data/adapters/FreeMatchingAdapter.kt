@@ -17,7 +17,8 @@ class FreeMatchingAdapter : RecyclerView.Adapter<FreeMatchingAdapter.MyViewHolde
 
     private var lineShapes = ArrayList<FreeMatchingPage>()
 
-    inner class MyViewHolder(private val binding: FreeMatchingItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyViewHolder(private val binding: FreeMatchingItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun adjustViews(matchingPage: FreeMatchingPage) {
             binding.itemView.viewSize = matchingPage.viewSize
@@ -26,20 +27,24 @@ class FreeMatchingAdapter : RecyclerView.Adapter<FreeMatchingAdapter.MyViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val item = FreeMatchingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val item =
+            FreeMatchingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         when (viewType) {
             smallViewVertical, smallViewHorizontal -> {
                 item.itemView.layoutParams.width = parent.width / 4
                 item.itemView.layoutParams.height = parent.height / 4
             }
+
             mediumViewVertical -> {
                 item.itemView.layoutParams.width = parent.width / 6
                 item.itemView.layoutParams.height = parent.height / 2
             }
+
             mediumViewHorizontal -> {
                 item.itemView.layoutParams.width = parent.width / 2
                 item.itemView.layoutParams.height = parent.height / 6
             }
+
             largeViewHorizontal, largeViewVertical -> {
                 item.itemView.layoutParams.width = parent.width
                 item.itemView.layoutParams.height = parent.height / 6
@@ -57,43 +62,42 @@ class FreeMatchingAdapter : RecyclerView.Adapter<FreeMatchingAdapter.MyViewHolde
         holder.adjustViews(lineShapes[position])
     }
 
-
     override fun getItemViewType(position: Int): Int {
         val page = lineShapes[position]
 
         if (page.viewSize.equals(
                 "Small Matching View",
-                true
+                true,
             ) && page.orientation.equals("Vertical", true)
         ) {
             return smallViewVertical
         } else if (page.viewSize.equals(
                 "smallMatchingView",
-                true
+                true,
             ) && page.orientation.equals("Horizontal", true)
         ) {
             return smallViewHorizontal
         } else if (page.viewSize.equals(
                 "Medium Matching View",
-                true
+                true,
             ) && page.orientation.equals("Vertical", true)
         ) {
             return mediumViewVertical
         } else if (page.viewSize.equals(
                 "Medium Matching View",
-                true
+                true,
             ) && page.orientation.equals("Horizontal", true)
         ) {
             return mediumViewHorizontal
         } else if (page.viewSize.equals(
                 "Large Matching View",
-                true
+                true,
             ) && page.orientation.equals("Vertical", true)
         ) {
             return largeViewVertical
         } else if (page.viewSize.equals(
                 "Large Matching View",
-                true
+                true,
             ) && page.orientation.equals("Horizontal", true)
         ) {
             return largeViewHorizontal
@@ -101,10 +105,8 @@ class FreeMatchingAdapter : RecyclerView.Adapter<FreeMatchingAdapter.MyViewHolde
         return 0
     }
 
-    fun addLines(linesList:List<FreeMatchingPage>){
+    fun addLines(linesList: List<FreeMatchingPage>) {
         lineShapes.addAll(linesList)
         notifyDataSetChanged()
     }
-
-
 }

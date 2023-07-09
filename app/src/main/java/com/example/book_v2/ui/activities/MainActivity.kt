@@ -1,6 +1,5 @@
 package com.example.book_v2.ui.activities // ktlint-disable package-name
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity(), PageNavListeners {
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
 
         bookPages = FactoryBuilder.BuildBookPages(intent?.extras?.getStringArrayList("DATA"))
+
         bookPages = bookPages.sortedBy { it.pageNum }
 
         setContentView(binding.root)

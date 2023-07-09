@@ -2,7 +2,12 @@ package com.example.book_v2.ui.customviews
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PointF
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -54,14 +59,12 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
     private var currentWrittenPointScore: WritingScore = WritingScore.NOTHING
     private var score = WritingScore.NOTHING
 
-    private var mCanvas: Canvas? = null
-    private var clipboard: Bitmap? = null
-
     // private val bitmapPaint: Paint = Paint()
     private var stillWriting = true
     private val fullPath = Path()
     private val bestFitLine = Path()
 
+    var disableFingerTouch = false
 
     init {
 
@@ -101,35 +104,25 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         circlesPaint.color = Color.BLACK
         circlesPaint.strokeJoin = Paint.Join.ROUND
         circlesPaint.strokeWidth = 4F
-
     }
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-
-        clipboard = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        mCanvas = Canvas(clipboard!!)
-    }
-
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.save()
         canvas.drawColor(color)
         for (i in 0..3) {
-            mCanvas!!.drawLine(
+            canvas.drawLine(
                 0f,
                 (i * height / 4).toFloat(),
                 width.toFloat(),
                 (i * height / 4).toFloat(),
-                dashedPaint
+                dashedPaint,
             )
         }
 
         canvas.drawPath(fullPath, circlesPaint)
 
         // canvas.drawPath(bestFitLine, writingPaint)
-
 
         crossMarksList.forEach { element ->
             canvas.drawPath(element, arrowPaint)
@@ -156,7 +149,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                             circleList!![circle.circleCount].x.toFloat(),
                             circleList!![circle.circleCount].y.toFloat(),
                             circleList!![circle.circleCount].radius.toFloat(),
-                            circlesFillPaint
+                            circlesFillPaint,
                         )
                     }
                 }
@@ -167,7 +160,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                     circleList!![currentCircleProgressCount].x.toFloat(),
                     circleList!![currentCircleProgressCount].y.toFloat(),
                     circleList!![currentCircleProgressCount].radius.toFloat(),
-                    circlesFillPaint
+                    circlesFillPaint,
                 )
                 currentCircleProgressCount++
                 fillCircle = false
@@ -177,7 +170,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                 //   Log.e(TAG, "onDraw: $currentCircleProgressCount")
                 val guidingArrow = drawArrow(
                     circleList!![currentCircleProgressCount].x + (radius + (width / 15)),
-                    circleList!![currentCircleProgressCount].y
+                    circleList!![currentCircleProgressCount].y,
                 )
                 canvas.drawPath(guidingArrow, arrowPaint)
             } else {
@@ -185,8 +178,6 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                 stillWriting = false
             }
         }
-
-        //canvas.drawBitmap(clipboard!!, 0F, 0F, bitmapPaint)
 
         canvas.restore()
     }
@@ -209,27 +200,26 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             mX = x
             mY = y
         }
-
-        crossMarksList.forEach { element ->
-            mCanvas!!.drawPath(element, arrowPaint)
-        }
     }
 
     private fun onTouchUp() {
         path.lineTo(mX, mY)
         path = Path()
-        mCanvas!!.drawPath(optimalPath, optimalPathPaint)
-        mCanvas!!.drawPath(halfOptimalPath, halfOptimalPathPaint)
-        mCanvas!!.drawPath(quarterOptimalPath, quarterOptimalPathPaint)
-        mCanvas!!.drawPath(outOfRangePath, outOfRangePathPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
+        if (disableFingerTouch) {
+            if (event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS) {
+                touchEnabled = false
+            }
+        }else{
+            touchEnabled = true
+        }
+
         if (touchEnabled) {
-//
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     onTouchStart(x, y)
@@ -272,12 +262,12 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             arrowPath.lineTo((touchX - (radius + width / 20)).toFloat(), touchY.toFloat())
             arrowPath.lineTo(
                 (touchX - (radius + width / 35)).toFloat(),
-                (touchY - height / 35).toFloat()
+                (touchY - height / 35).toFloat(),
             )
             arrowPath.moveTo((touchX - (radius + width / 20)).toFloat(), touchY.toFloat())
             arrowPath.lineTo(
                 (touchX - (radius + width / 35)).toFloat(),
-                (touchY + height / 35).toFloat()
+                (touchY + height / 35).toFloat(),
             )
         }
         return arrowPath
@@ -297,12 +287,9 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             letterPath.addCircle(i.x.toFloat(), i.y.toFloat(), radius.toFloat(), Path.Direction.CW)
             invalidate()
         }
-        mCanvas!!.drawPath(letterPath, circlesPaint)
-
-
         bestFitLine.moveTo(
             handWritingAccuracy.fullPath[0].x.toFloat(),
-            handWritingAccuracy.fullPath[0].y.toFloat()
+            handWritingAccuracy.fullPath[0].y.toFloat(),
         )
         handWritingAccuracy.fullPath.let {
             it.forEachIndexed { index, e ->
@@ -312,7 +299,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                     val distanceBetweenPoints = sqrt(
                         (it[index].x - it[index - 1].x).toDouble()
                             .pow(2.0) + (it[index].y - it[index - 1].y).toDouble()
-                            .pow(2.0)
+                            .pow(2.0),
                     )
 
                     if (distanceBetweenPoints > handWritingAccuracy.space) {
@@ -372,28 +359,22 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         disableTouch(3000)
         drawCrossMark(x, y)
         MainScope().launch(Dispatchers.Main) {
-            color = Color.RED
-            delay(500)
-            invalidate()
-            color = Color.TRANSPARENT
-            delay(500)
-            invalidate()
+            for (i in 0..1) {
+                color = Color.RED
+                delay(500)
+                invalidate()
+                color = Color.TRANSPARENT
+                delay(500)
+                invalidate()
+            }
         }
-//
-//            currentPaths.clear()
-//            deletedPaths.clear()
-//            handWritingAccuracy?.resetAccuracyValue()
-//            currentCircleProgressCount = 0
-//        }
-//
-//        invalidate()
     }
 
-    //
     private fun disableTouch(duration: Long) {
         touchEnabled = false
         Handler().postDelayed(
-            { touchEnabled = true }, duration
+            { touchEnabled = true },
+            duration,
         )
     }
 
@@ -418,7 +399,6 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         outOfRangePathPaint.strokeWidth = 1F
     }
 
-
     private var lastOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
     private var lastHalfOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
     private var lastQuarterOptimalPoint = PointF(firstPointOfLetterX, firstPointOfLetterY)
@@ -428,17 +408,17 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
         when (score) {
             WritingScore.Optimal -> {
                 Color.GREEN
-                //connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
+                // connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
                 optimalPath.addCircle(x, y, 5F, Path.Direction.CCW)
-                //lastOptimalPoint = PointF(x, y)
+                // lastOptimalPoint = PointF(x, y)
                 currentPath = 1
             }
 
             WritingScore.HalfOptimal -> {
                 Color.YELLOW
-                //connectPaths(lastHalfOptimalPoint, PointF(x, y), optimalPath)
+                // connectPaths(lastHalfOptimalPoint, PointF(x, y), optimalPath)
                 halfOptimalPath.addCircle(x, y, 5F, Path.Direction.CCW)
-                //lastHalfOptimalPoint = PointF(x, y)
+                // lastHalfOptimalPoint = PointF(x, y)
                 currentPath = 2
             }
 
@@ -452,7 +432,7 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
 
             WritingScore.OutOfRange -> {
                 Color.RED
-                //connectPaths(lastOutOfRangePoint, PointF(x, y), optimalPath)
+                // connectPaths(lastOutOfRangePoint, PointF(x, y), optimalPath)
                 outOfRangePath.addCircle(x, y, 5F, Path.Direction.CCW)
                 // lastOutOfRangePoint = PointF(x, y)
                 currentPath = 4
@@ -464,15 +444,15 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
             WritingScore.Continue -> {
                 when (currentPath) {
                     1 -> {
-                        //connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
+                        // connectPaths(lastOptimalPoint, PointF(x, y), optimalPath)
                         optimalPath.addCircle(x, y, 3F, Path.Direction.CCW)
-                        //lastOptimalPoint = PointF(x, y)
+                        // lastOptimalPoint = PointF(x, y)
                     }
 
                     2 -> {
                         // connectPaths(lastHalfOptimalPoint, PointF(x, y), optimalPath)
                         halfOptimalPath.addCircle(x, y, 3F, Path.Direction.CCW)
-                        //lastHalfOptimalPoint = PointF(x, y)
+                        // lastHalfOptimalPoint = PointF(x, y)
                     }
 
                     3 -> {
@@ -485,7 +465,6 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
                         // connectPaths(lastOutOfRangePoint, PointF(x, y), optimalPath)
                         outOfRangePath.addCircle(x, y, 3F, Path.Direction.CCW)
                         // lastOutOfRangePoint = PointF(x, y)
-
                     }
                 }
             }
@@ -493,22 +472,19 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
     }
 
     private fun connectPaths(lastPoint: PointF, newPoint: PointF, path: Path) {
-
         val distanceBetweenPoints = sqrt(
             (newPoint.x - lastPoint.x).toDouble().pow(2.0) + (newPoint.y - lastPoint.y).toDouble()
-                .pow(2.0)
+                .pow(2.0),
         )
         if (distanceBetweenPoints < 3) {
             path.quadTo(
                 lastPoint.x,
                 lastPoint.y,
                 (newPoint.x + lastPoint.x) / 2,
-                (newPoint.y + lastPoint.y) / 2
+                (newPoint.y + lastPoint.y) / 2,
             )
         } else {
             path.moveTo(newPoint.x, newPoint.y)
         }
     }
-
-
 }

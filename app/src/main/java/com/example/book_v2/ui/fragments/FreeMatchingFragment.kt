@@ -15,7 +15,7 @@ import com.example.book_v2.services.interfaces.PageNavListeners
 
 class FreeMatchingFragment(
     private val listener: PageNavListeners,
-    private val pageData: FreeMatchingPage
+    private val pageData: FreeMatchingPage,
 ) : Fragment() {
 
     private lateinit var binding: FreeMatchingPageLayoutBinding
@@ -24,10 +24,9 @@ class FreeMatchingFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FreeMatchingPageLayoutBinding.inflate(inflater, container, false)
-
 
         linesListData = MutableList(pageData.numOfLines) { pageData }
 
@@ -41,7 +40,6 @@ class FreeMatchingFragment(
         adapter.addLines(linesListData)
 
         setListeners()
-
 
         val layout1 = if (pageData.viewType.equals("GridLayout", true)) {
             object : GridLayoutManager(context, pageData.numOfColumns) {
@@ -89,14 +87,12 @@ class FreeMatchingFragment(
             }
         }
 
-
         binding.leftLinesRcView.layoutManager = layout1
         binding.rightLinesRcView.layoutManager = layout2
 
         binding.rightLinesRcView.adapter = adapter
         binding.leftLinesRcView.adapter = adapter
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
@@ -114,15 +110,12 @@ class FreeMatchingFragment(
         binding.viewCover.root.setOnTouchListener { _, _ ->
             return@setOnTouchListener true
         }
-
     }
-
 
     companion object {
         const val ORIENTATION_VERTICAL = "Vertical"
         const val ORIENTATION_HORIZONTAL = "Horizontal"
     }
-
 
     override fun onPause() {
         super.onPause()

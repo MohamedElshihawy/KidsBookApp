@@ -2,7 +2,11 @@ package com.example.book_v2.ui.customviews
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -19,7 +23,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
     private val smallMatchingView = "Small Matching View"
     private val mediumMatchingView = "Medium Matching View"
     private val largeMatchingView = "Large Matching View"
-    private val dashedStraightLine = "Dashed Curved Line"
+    private val dashedCurvedLine = "Dashed Curved Line"
 
     private var dashPath: DashPathEffect = DashPathEffect(floatArrayOf(6f, 6f), 4.0.toFloat())
     private var circlesPaint: Paint = Paint()
@@ -52,12 +56,10 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         paint.color = Color.BLACK
         paint.pathEffect = dashPath
 
-
         writingPaint.isAntiAlias = true
         writingPaint.style = Paint.Style.STROKE
         writingPaint.strokeWidth = 10f
         writingPaint.color = Color.BLACK
-
 
         val customTypeface = context?.let {
             ResourcesCompat.getFont(it, R.font.blabello)
@@ -87,11 +89,10 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
             writingPaint.color = stroke.color
             writingPaint.strokeWidth = stroke.width.toFloat()
             canvas.drawPath(stroke.path, writingPaint)
-
         }
 
         viewSize?.let {
-            curvedLine = if (lineShape.equals(dashedStraightLine, true)) {
+            curvedLine = if (lineShape.equals(dashedCurvedLine, true)) {
                 drawnCurvedLine(it)
             } else {
                 drawStraightLine(it)
@@ -101,13 +102,13 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 curvedLine.x1!!.toFloat(),
                 curvedLine.y1!!.toFloat(),
                 curvedLine.radius!!.toFloat(),
-                circlesPaint
+                circlesPaint,
             )
             canvas.drawCircle(
                 curvedLine.x2!!.toFloat(),
                 curvedLine.y2!!.toFloat(),
                 curvedLine.radius!!.toFloat(),
-                circlesPaint
+                circlesPaint,
             )
             val quarterR = curvedLine.radius!! / 4
             textPaint.textSize = (quarterR * 4).toFloat()
@@ -122,16 +123,17 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 letter2,
                 (curvedLine.x1!! - quarterR).toFloat(),
                 (curvedLine.y1!! + quarterR).toFloat(),
-                textPaint
+                textPaint,
             )
             canvas.drawText(
-                letter1, (curvedLine.x2!! - quarterR).toFloat(),
-                (curvedLine.y2!! + quarterR).toFloat(), textPaint
+                letter1,
+                (curvedLine.x2!! - quarterR).toFloat(),
+                (curvedLine.y2!! + quarterR).toFloat(),
+                textPaint,
             )
         }
         canvas.restore()
     }
-
 
     private fun onTouchStart(x: Float, y: Float) {
         path = Path()
@@ -166,10 +168,12 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 onTouchStart(x, y)
                 invalidate()
             }
+
             MotionEvent.ACTION_MOVE -> {
                 onTouchMove(x, y)
                 invalidate()
             }
+
             MotionEvent.ACTION_UP -> {
                 onTouchUp()
                 invalidate()
@@ -185,9 +189,11 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
             smallMatchingView -> {
                 curvedLine = smallStraightLine()
             }
+
             mediumMatchingView -> {
                 curvedLine = mediumStraightLine()
             }
+
             largeMatchingView -> {
                 curvedLine = largeStraightLine()
             }
@@ -204,10 +210,12 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 curvedLine =
                     smallSizeView()
             }
+
             mediumMatchingView -> {
                 curvedLine =
                     mediumSizeView()
             }
+
             largeMatchingView -> {
                 curvedLine =
                     largeSizeView()
@@ -216,10 +224,8 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         return curvedLine
     }
 
-    private fun smallSizeView(
-
-    ): CurvedLine {
-        //suppose that the each circle will take 40 percentage of height
+    private fun smallSizeView(): CurvedLine {
+        // suppose that the each circle will take 40 percentage of height
         // and that we leave 10 percentage margin at top and bottom
         val curvedLine = CurvedLine()
         val linePath = Path()
@@ -234,7 +240,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 (width / 2).toFloat(),
                 0.toFloat(),
                 (x2 - r).toFloat(),
-                (y2).toFloat()
+                (y2).toFloat(),
             )
         } else {
             r = (.2 * height).toInt()
@@ -247,7 +253,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 0.toFloat(),
                 (height / 2).toFloat(),
                 (x2 - r).toFloat(),
-                y2.toFloat()
+                y2.toFloat(),
             )
         }
         curvedLine.x1 = x1
@@ -259,9 +265,8 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         return curvedLine
     }
 
-    private fun mediumSizeView(
-    ): CurvedLine {
-        //suppose that the each circle will take 40 percentage of height
+    private fun mediumSizeView(): CurvedLine {
+        // suppose that the each circle will take 40 percentage of height
         // and that we leave 10 percentage margin at top and bottom
         val linePath = Path()
         val curvedLine = CurvedLine()
@@ -276,7 +281,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 (width / 2).toFloat(),
                 0.toFloat(),
                 (x2 - r).toFloat(),
-                (y2).toFloat()
+                (y2).toFloat(),
             )
         } else {
             r = (.1 * height).toInt()
@@ -290,7 +295,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 0.toFloat(),
                 (height / 2).toFloat(),
                 (x2 - r).toFloat(),
-                y2.toFloat()
+                y2.toFloat(),
             )
         }
         curvedLine.x1 = x1
@@ -302,9 +307,8 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         return curvedLine
     }
 
-    private fun largeSizeView(
-    ): CurvedLine {
-        //suppose that the each circle will take 40 percentage of height
+    private fun largeSizeView(): CurvedLine {
+        // suppose that the each circle will take 40 percentage of height
         // and that we leave 10 percentage margin at top and bottom
         val linePath = Path()
         val curvedLine = CurvedLine()
@@ -320,7 +324,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 (width / 2).toFloat(),
                 0.toFloat(),
                 (x2 - r).toFloat(),
-                (y2).toFloat()
+                (y2).toFloat(),
             )
         } else {
             r = (.05 * height).toInt()
@@ -333,7 +337,7 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
                 0.toFloat(),
                 (height / 2).toFloat(),
                 (x2 - r).toFloat(),
-                y2.toFloat()
+                y2.toFloat(),
             )
         }
         curvedLine.x1 = x1
@@ -344,7 +348,6 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         curvedLine.linePath = linePath
         return curvedLine
     }
-
 
     private fun smallStraightLine(): CurvedLine {
         val curvedLine = CurvedLine()
@@ -404,7 +407,6 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
         return curvedLine
     }
 
-
     private fun largeStraightLine(): CurvedLine {
         val curvedLine = CurvedLine()
         val linePath = Path()
@@ -434,6 +436,4 @@ class FreeMatchingView(context: Context?, attributeSet: AttributeSet?) :
 
         return curvedLine
     }
-
-
 }
