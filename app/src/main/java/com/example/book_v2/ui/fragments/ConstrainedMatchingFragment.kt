@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.book_v2.data.adapters.ConstrainedMatchingAdapter
 import com.example.book_v2.data.oop.ConstrainedMatchingPage
 import com.example.book_v2.databinding.ConstrainedMatchingLayoutBinding
-import com.example.book_v2.services.interfaces.PageNavListeners
 import com.example.book_v2.services.SimpleItemDecoration
+import com.example.book_v2.services.interfaces.PageNavListeners
 import com.example.book_v2.utilities.DrawLetters
-
 
 class ConstrainedMatchingFragment(
     private val listener: PageNavListeners,
-    private val pageData: ConstrainedMatchingPage
+    private val pageData: ConstrainedMatchingPage,
 ) : Fragment() {
-
 
     private lateinit var binding: ConstrainedMatchingLayoutBinding
     private lateinit var adapter: ConstrainedMatchingAdapter
@@ -27,13 +25,12 @@ class ConstrainedMatchingFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = ConstrainedMatchingLayoutBinding.inflate(inflater, container, false)
 
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +50,6 @@ class ConstrainedMatchingFragment(
         binding.rightLinesRcView.adapter = adapter
         binding.leftLinesRcView.adapter = adapter
 
-
         pageData.patternsPaths.forEach { dataItem ->
             val data = DrawLetters.getAllPointsFromFile(dataItem)
             pageData.patternsRepresentation.add(data)
@@ -63,9 +59,7 @@ class ConstrainedMatchingFragment(
         binding.rightLinesRcView.addItemDecoration(SimpleItemDecoration())
 
         adapter.addPage(pageData)
-
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
@@ -84,6 +78,4 @@ class ConstrainedMatchingFragment(
             return@setOnTouchListener true
         }
     }
-
-
 }

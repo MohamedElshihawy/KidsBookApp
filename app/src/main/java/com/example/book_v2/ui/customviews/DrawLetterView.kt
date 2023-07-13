@@ -211,12 +211,13 @@ class DrawLetterView(context: Context?, attributeSet: AttributeSet?) : View(cont
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
+        var enableTouchWithPen = true
+
         if (disableFingerTouch) {
-            if (event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS) {
-                touchEnabled = false
-            }
-        }else{
-            touchEnabled = true
+            enableTouchWithPen = event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS
+            touchEnabled.and(enableTouchWithPen)
+        } else {
+            touchEnabled.and(true)
         }
 
         if (touchEnabled) {

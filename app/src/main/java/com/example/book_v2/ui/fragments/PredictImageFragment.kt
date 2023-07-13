@@ -90,9 +90,7 @@ class PredictImageFragment(
         val db = database(context)
         val res = db.insert(data)
         if (res) {
-            Log.e("TAG", "insert  : ")
         } else {
-            Log.e("TAG", "update : ")
             db.updateItem(data)
         }
     }
@@ -141,7 +139,6 @@ class PredictImageFragment(
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.e("TAG", "onFailure: ${e.message}")
                 }
             })
         }

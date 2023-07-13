@@ -13,7 +13,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.example.book.ui.fragments.PageCompletedFragment
 import com.example.book_v2.R
 import com.example.book_v2.data.database.ReportData
 import com.example.book_v2.data.oop.MediumLetterPage

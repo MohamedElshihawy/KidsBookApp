@@ -15,10 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.example.book.ui.fragments.PageCompletedFragment
 import com.example.book_v2.R
 import com.example.book_v2.data.database.ReportData
-import com.example.book_v2.data.database.database
 import com.example.book_v2.data.oop.*
 import com.example.book_v2.databinding.LargeLetterPageLayoutBinding
 import com.example.book_v2.services.interfaces.PageNavListeners
@@ -105,17 +103,9 @@ class LargeLetterFragment(
     private fun setListeners() {
         binding.bottomOfPage.nextBtn.setOnClickListener {
             listener.nextPage()
-            Log.e("TAG", "onTaskCompleted: " + totalAccuracy)
+            Log.e("TAG", "onTaskCompleted: $totalAccuracy")
         }
         binding.bottomOfPage.previousBtn.setOnClickListener { listener.previousPage() }
-
-        binding.viewCover.lock.setOnClickListener {
-            binding.viewCover.root.visibility = View.GONE
-        }
-
-        binding.viewCover.root.setOnTouchListener { _, _ ->
-            return@setOnTouchListener true
-        }
 
         binding.micTestPage.setOnClickListener {
             textToSpeech.speak(pageData.letter, TextToSpeech.QUEUE_ADD, null, null)
@@ -252,6 +242,11 @@ class LargeLetterFragment(
             binding.toolBar.smallFont.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.toolBar.mediumFont.setBackgroundColor(resources.getColor(R.color.light_grey))
         }
+
+        binding.pen.setOnClickListener {
+            binding.letterView1.disableFingerTouch = true
+            binding.letterView2.disableFingerTouch = true
+        }
     }
 
     private fun setUpPage() {
@@ -277,16 +272,13 @@ class LargeLetterFragment(
 
     override fun onTaskCompleted(accuracy: Double) {
         if (currentPanel == 0) {
-            Log.e("TAG", "onTaskCompleted: canceled 0 ")
             binding.letterView1.touchEnabled = false
         } else if (currentPanel == 1) {
-            Log.e("TAG", "onTaskCompleted: canceled 1 ")
             binding.letterView2.touchEnabled = false
         }
 
         completedViews++
         totalAccuracy = +accuracy
-        Log.e("TAG", "onTaskCompleted: " + totalAccuracy)
         if (completedViews == 2) {
             totalAccuracy /= 2
             val fragment = PageCompletedFragment(totalAccuracy)

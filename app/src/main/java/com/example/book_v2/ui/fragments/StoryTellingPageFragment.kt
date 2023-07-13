@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -16,7 +16,7 @@ import java.util.*
 
 class StoryTellingPageFragment(
     private val listener: PageNavListeners,
-    private val pageData: StoryTellingPage
+    private val pageData: StoryTellingPage,
 ) :
     Fragment() {
 
@@ -29,9 +29,8 @@ class StoryTellingPageFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-
         binding = StoryPageLayoutBinding.inflate(layoutInflater, container, false)
 
         textToSpeech = TextToSpeechSetUp.newInstanceTTS(requireContext())
@@ -40,15 +39,11 @@ class StoryTellingPageFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setUpPage()
         setListeners()
-
     }
 
-
     private fun setUpPage() {
-
         val storyContent = pageData.storyContent.split(" ")
 
         storyContent.forEachIndexed { index, e ->
@@ -67,8 +62,6 @@ class StoryTellingPageFragment(
         binding.storyCover.loadImageIntoView(pageData.storyCoverPath)
     }
 
-
-
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
         binding.bottomOfPage.nextBtn.setOnClickListener {
@@ -86,7 +79,7 @@ class StoryTellingPageFragment(
                     storyParagraphs[storySlideNum],
                     TextToSpeech.QUEUE_ADD,
                     null,
-                    null
+                    null,
                 )
             }
         }
@@ -100,7 +93,7 @@ class StoryTellingPageFragment(
                     storyParagraphs[storySlideNum],
                     TextToSpeech.QUEUE_ADD,
                     null,
-                    null
+                    null,
                 )
             }
         }
@@ -114,10 +107,8 @@ class StoryTellingPageFragment(
                     storyParagraphs[storySlideNum],
                     TextToSpeech.QUEUE_ADD,
                     null,
-                    null
+                    null,
                 )
-
-
             }
         }
     }
@@ -127,6 +118,4 @@ class StoryTellingPageFragment(
         textToSpeech.stop()
         textToSpeech.shutdown()
     }
-
-
 }

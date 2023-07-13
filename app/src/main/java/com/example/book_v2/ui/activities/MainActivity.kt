@@ -8,12 +8,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.book.ui.fragments.ConstrainedMatchingFragment
-import com.example.book.ui.fragments.FreeMatchingFragment
-import com.example.book.ui.fragments.LetterFirstPreviewFragment
-import com.example.book.ui.fragments.LetterSecondPreviewFragment
+import com.example.book_v2.ui.fragments.ConstrainedMatchingFragment
+import com.example.book_v2.ui.fragments.FreeMatchingFragment
+import com.example.book_v2.ui.fragments.LetterFirstPreviewFragment
+import com.example.book_v2.ui.fragments.LetterSecondPreviewFragment
 import com.example.book.ui.fragments.SmallLetterFragment
-import com.example.book.ui.fragments.StoryTellingPageFragment
+import com.example.book_v2.ui.fragments.StoryTellingPageFragment
 import com.example.book_v2.R
 import com.example.book_v2.data.oop.Book
 import com.example.book_v2.data.oop.ColoringPage

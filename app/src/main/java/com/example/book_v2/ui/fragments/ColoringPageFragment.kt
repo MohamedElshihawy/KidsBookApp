@@ -21,7 +21,7 @@ import kotlinx.coroutines.*
 
 class ColoringPageFragment(
     private var listener: PageNavListeners,
-    private val pageData: ColoringPage
+    private val pageData: ColoringPage,
 ) : Fragment() {
 
     private lateinit var binding: ColoringPageLayoutBinding
@@ -30,26 +30,20 @@ class ColoringPageFragment(
     private var strokeSize = 10
     private var strokeColor = Color.BLACK
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = ColoringPageLayoutBinding.inflate(layoutInflater, container, false)
-
 
         return binding.root
     }
 
-
     @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
         setUpPage()
         setListeners()
-
 
         binding.imageToBeColored.post {
             GlobalScope.launch(Dispatchers.IO) {
@@ -58,7 +52,7 @@ class ColoringPageFragment(
                         requireContext(),
                         pageData.filledImagePath,
                         binding.coloredImage.width,
-                        binding.coloredImage.height
+                        binding.coloredImage.height,
                     )
                 }
                 val imageToBeColored = async {
@@ -66,7 +60,7 @@ class ColoringPageFragment(
                         requireContext(),
                         pageData.outlinedImagePath,
                         binding.imageToBeColored.width,
-                        binding.imageToBeColored.height
+                        binding.imageToBeColored.height,
                     )
                 }
 
@@ -75,14 +69,10 @@ class ColoringPageFragment(
                     binding.imageToBeColored.setBitmapInCanvas(image)
                     binding.imageToBeColored.invalidate()
                     binding.coloredImage.setImageBitmap(coloredImage.await())
-
                 }
             }
         }
-
-
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
@@ -123,7 +113,6 @@ class ColoringPageFragment(
                 binding.toolBar.pen.setBackgroundColor(resources.getColor(R.color.light_grey))
                 isPenBarOpen = false
             }
-
         }
         binding.toolBar.brush.setOnClickListener {
             ColorSheet().colorPicker(
@@ -132,11 +121,11 @@ class ColoringPageFragment(
                 listener = { color ->
                     strokeColor = color
                     binding.imageToBeColored.currentStrokeColor = strokeColor
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
             strokeSize = 48
             binding.imageToBeColored.currentStrokeWidth = strokeSize
-
         }
 
         binding.toolBar.undo.setOnClickListener {
@@ -154,7 +143,8 @@ class ColoringPageFragment(
                 listener = { color ->
                     strokeColor = color
                     binding.imageToBeColored.currentStrokeColor = strokeColor
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
         }
 
@@ -186,8 +176,6 @@ class ColoringPageFragment(
         binding.bottomOfPage.pageNum.text = pageData.pageNum.toString()
         binding.imageToBeColored.currentStrokeColor = strokeColor
         binding.imageToBeColored.currentStrokeWidth = strokeSize
-
-
     }
 
     override fun onPause() {
@@ -199,7 +187,4 @@ class ColoringPageFragment(
         // Return a unique ID for this fragment
         return this.hashCode().toLong()
     }
-
-
-
 }

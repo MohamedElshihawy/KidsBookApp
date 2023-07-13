@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.annotation.SuppressLint
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package com.example.book.ui.fragments
+package com.example.book_v2.ui.fragments
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -21,7 +21,7 @@ import dev.sasikanth.colorsheet.ColorSheet
 
 class LetterFirstPreviewFragment(
     private val listener: PageNavListeners,
-    private val pageData: LetterFirstPreviewPage
+    private val pageData: LetterFirstPreviewPage,
 ) : Fragment() {
 
     private lateinit var binding: LetterFirstPreviewPageLayoutBinding
@@ -34,7 +34,7 @@ class LetterFirstPreviewFragment(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = LetterFirstPreviewPageLayoutBinding.inflate(layoutInflater, container, false)
 
@@ -44,11 +44,9 @@ class LetterFirstPreviewFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setListeners()
         setUpPage()
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setListeners() {
@@ -93,7 +91,6 @@ class LetterFirstPreviewFragment(
                 binding.toolBar.pen.setBackgroundColor(resources.getColor(R.color.light_grey))
                 isPenBarOpen = false
             }
-
         }
         binding.toolBar.brush.setOnClickListener {
             ColorSheet().colorPicker(
@@ -102,12 +99,11 @@ class LetterFirstPreviewFragment(
                 listener = { color ->
                     strokeColor = color
                     binding.writeTextView.currentStrokeColor = strokeColor
-
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
             strokeSize = 48
             binding.writeTextView.currentStrokeWidth = strokeSize
-
         }
 
         binding.toolBar.undo.setOnClickListener {
@@ -125,8 +121,8 @@ class LetterFirstPreviewFragment(
                 listener = { color ->
                     strokeColor = color
                     binding.writeTextView.currentStrokeColor = strokeColor
-
-                })
+                },
+            )
                 .show(requireActivity().supportFragmentManager)
         }
 
@@ -151,8 +147,6 @@ class LetterFirstPreviewFragment(
             binding.toolBar.smallFont.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.toolBar.mediumFont.setBackgroundColor(resources.getColor(R.color.light_grey))
         }
-
-
     }
 
     private fun setUpPage() {
@@ -165,10 +159,8 @@ class LetterFirstPreviewFragment(
         binding.writeTextView.currentStrokeWidth = strokeSize
     }
 
-
     override fun onPause() {
         super.onPause()
         binding.viewCover.root.visibility = View.VISIBLE
     }
-
 }

@@ -23,6 +23,7 @@ import com.example.book_v2.services.setHighLightedText
 import com.example.book_v2.ui.Effects.Animation
 import com.example.book_v2.ui.activities.BookCoverActivity.Companion.colorArr
 import com.example.book_v2.ui.customviews.DrawLetterView
+import com.example.book_v2.ui.fragments.PageCompletedFragment
 import com.example.book_v2.utilities.DBOperations
 import com.example.book_v2.utilities.DrawLetters
 import com.example.book_v2.utilities.TextToSpeechSetUp

@@ -20,13 +20,11 @@ import com.example.book_v2.utilities.TextToSpeechSetUp
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.math.roundToInt
-
 
 class IntroductionPageFragment(
     private val listener: PageNavListeners,
-    private val pageData: IntroductionPage
+    private val pageData: IntroductionPage,
 ) : Fragment(), ChangePageTheme {
 
     private lateinit var binding: IntroductionPageLayoutBinding
@@ -36,16 +34,18 @@ class IntroductionPageFragment(
     val TAG = "Introduction page"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
-
         binding = IntroductionPageLayoutBinding.inflate(layoutInflater, container, false)
 
         MainScope().launch {
             Palette.from(
                 uriToBitmap(
-                    requireContext(), pageData.animalImagePath
-                )
+                    requireContext(),
+                    pageData.animalImagePath,
+                ),
             ).generate { generated ->
 //                if (generated != null) {
 //                    pageTheme.onColorsLoaded(
@@ -60,13 +60,10 @@ class IntroductionPageFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         textToSpeech = TextToSpeechSetUp.newInstanceTTS(requireContext())
         setUpPage()
         setListeners()
-
     }
-
 
     private fun setListeners() {
         binding.bottomOfPage.nextBtn.setOnClickListener { listener.nextPage() }
@@ -106,7 +103,9 @@ class IntroductionPageFragment(
 //            PorterDuff.Mode.SRC_ATOP
 //        )
         setHighLightedText(
-            binding.animalName, pageData.letterText, palette.titleTextColor
+            binding.animalName,
+            pageData.letterText,
+            palette.titleTextColor,
         )
         binding.cloud.setColorFilter(palette.rgb)
     }
@@ -125,5 +124,4 @@ class IntroductionPageFragment(
         textToSpeech.shutdown()
         super.onDestroy()
     }
-
 }
